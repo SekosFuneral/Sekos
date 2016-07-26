@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 01 Mar 2016 9:11:17 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Funerals.Service" table="service" catalog="sekosfuneralsdb" optimistic-lock="version">
+        <composite-id name="id" class="Funerals.ServiceId">
+            <key-property name="serviceid" type="int">
+                <column name="serviceid" />
+            </key-property>
+            <key-property name="funeralFuneralid" type="int">
+                <column name="funeral_funeralid" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="funeral" class="Funerals.Funeral" update="false" insert="false" fetch="select">
+            <column name="funeral_funeralid" not-null="true" />
+        </many-to-one>
+        <property name="nameOfService" type="string">
+            <column name="name_of_service" length="45" />
+        </property>
+        <property name="describtionOfService" type="string">
+            <column name="describtion_of_service" length="100" />
+        </property>
+        <property name="costOfService" type="java.lang.Double">
+            <column name="cost_of_service" precision="22" scale="0" />
+        </property>
+        <set name="materials" table="material" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="service_serviceid" not-null="true" />
+                <column name="service_funeral_funeralid" not-null="true" />
+            </key>
+            <one-to-many class="Funerals.Material" />
+        </set>
+    </class>
+</hibernate-mapping>
